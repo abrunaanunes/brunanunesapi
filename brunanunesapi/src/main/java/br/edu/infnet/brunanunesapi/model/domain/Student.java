@@ -1,12 +1,10 @@
-package br.edu.infnet.model.domain;
-
-import java.util.Date;
+package br.edu.infnet.brunanunesapi.model.domain;
 
 public class Student {
 	private Integer id;
 	private String firstName; 
 	private String lastName;
-	private Date birthDate;
+	private String birthDate;
 	private String username;
 	private String passowrd;
 	private boolean isActive;
@@ -43,11 +41,11 @@ public class Student {
 		this.lastName = lastName;
 	}
 
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 
