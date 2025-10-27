@@ -20,7 +20,7 @@ public class StudentController {
 	}
 	
 	@PostMapping("/api/students")
-	public Student create(@RequestBody Student student) {
+	public Student create(@RequestBody Student student) throws Exception {
 		Student studentAdded = studentService.create(student);
 		return studentAdded;
 	}

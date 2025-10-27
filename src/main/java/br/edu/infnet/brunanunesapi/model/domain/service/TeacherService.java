@@ -1,0 +1,88 @@
+package br.edu.infnet.brunanunesapi.model.domain.service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.springframework.stereotype.Service;
+
+import br.edu.infnet.brunanunesapi.exceptions.InvalidStudentException;
+import br.edu.infnet.brunanunesapi.exceptions.StudentNotFoundException;
+import br.edu.infnet.brunanunesapi.interfaces.CrudService;
+import br.edu.infnet.brunanunesapi.model.domain.Teacher;
+
+@Service
+public class TeacherService implements CrudService<Teacher, Integer> {
+
+    private final Map<Integer, Teacher> teacherMap = new ConcurrentHashMap<>();
+    private final AtomicInteger nextId = new AtomicInteger(1);
+    
+	@Override
+	public Teacher create(Teacher teacher) {
+		this.validateCreateOrUpdateTeacher(teacher, "CREATE");
+		teacher.setId(nextId.getAndIncrement());
+		teacherMap.put(teacher.getId(), teacher);
+		return teacher;
+	}
+
+	@Override
+	public List<Teacher> getAll() {
+		return new ArrayList<Teacher>(teacherMap.values());
+	}
+
+	@Override
+	public Teacher update(Integer id, Teacher teacher) {
+		Teacher teacherUpdated = this.getById(id);
+		
+		teacherUpdated.setFirstName(teacher.getFirstName());
+		teacherUpdated.setLastName(teacher.getLastName());
+		
+		return teacherUpdated;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		Teacher teacher = this.getById(id);
+		teacherMap.remove(teacher.getId());
+		
+	}
+
+	@Override
+	public Teacher getById(Integer id) {
+		if (id == null || id <= 0) {
+			throw new IllegalArgumentException("Invalid teacher ID");
+		}
+		
+		Teacher teacher = teacherMap.get(id);
+		
+		if (teacher == null) {
+			throw new StudentNotFoundException("Teacher not found");
+		}
+		
+		return teacher;
+	}
+	
+	private void validateCreateOrUpdateTeacher(Teacher teacher, String action)
+	{
+		if (teacher == null) {
+			throw new IllegalArgumentException("Teacher cannot be null");
+		}
+		
+		if (teacher.getFirstName() == null || teacher.getLastName() == null) {
+			throw new InvalidStudentException("Teacher name cannot be null");
+		}
+		
+		if (teacher.getFirstName().trim().isEmpty()|| teacher.getLastName().trim().isEmpty()) {
+			throw new InvalidStudentException("Teacher name cannot be empty");
+		}
+		
+		if (action == "CREATE" && teacher.getId() != null && teacher.getId() > 0) {
+			throw new IllegalArgumentException("Teacher must not have an ID when created");
+		}
+		
+		if (action == "UPDATE" && teacher.getId() == null && teacher.getId() <= 0) {
+			throw new IllegalArgumentException("Teacher must have an ID when updated");
+		}
+	}
+}

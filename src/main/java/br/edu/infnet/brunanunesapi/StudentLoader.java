@@ -49,6 +49,7 @@ public class StudentLoader implements ApplicationRunner {
             line = read.readLine();
         }
         
+        System.out.println("------------STUDENTS------------");
         Collection<Student> students = studentService.getAll();
         students.forEach(System.out::println);
         

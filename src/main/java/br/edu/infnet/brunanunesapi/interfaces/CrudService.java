@@ -8,4 +8,5 @@ public interface CrudService<T, ID> {
 	List<T> getAll();
 	T update(ID id, T entity);
 	void delete(ID id);
+	T getById(ID id);
 }
