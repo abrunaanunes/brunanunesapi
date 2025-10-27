@@ -2,15 +2,20 @@ package br.edu.infnet.brunanunesapi.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.infnet.brunanunesapi.model.domain.Student;
 import br.edu.infnet.brunanunesapi.model.domain.Teacher;
 import br.edu.infnet.brunanunesapi.model.domain.service.TeacherService;
 
 @RestController
+@RequestMapping("/api/teachers")
 public class TeacherController {
 	
 	private final TeacherService teacherService;
@@ -19,14 +24,32 @@ public class TeacherController {
 		this.teacherService = teacherService;
 	}
 	
-	@PostMapping("/api/teachers")
+	@PostMapping
 	public Teacher create(@RequestBody Teacher teacher) {
 		Teacher teacherAdded = teacherService.create(teacher);
 		return teacherAdded;
 	}
 	
-	@GetMapping("/api/teachers")
+	@GetMapping
 	public List<Teacher> getAll() {
 		return teacherService.getAll();
+	}
+	
+	
+	@GetMapping("/{id}")
+	public Teacher getById(Integer id) {
+		Teacher teacher = teacherService.getById(id);
+		return teacher;
+	}
+	
+	@PutMapping("/{id}")
+	public Teacher update(Integer id, Teacher teacher) {
+		Teacher teacherUpdated = teacherService.update(id, teacher);
+		return teacherUpdated;
+	}
+	
+	@DeleteMapping("/{id}")
+	public void delete(Integer id) {
+		teacherService.delete(id);
 	}
 }
