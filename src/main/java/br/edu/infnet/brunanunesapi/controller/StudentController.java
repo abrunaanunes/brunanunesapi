@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,24 +37,24 @@ public class StudentController {
 	}
 	
 	@GetMapping("/{id}")
-	public Student getById(Integer id) {
+	public Student getById(@PathVariable Integer id) {
 		Student student = studentService.getById(id);
 		return student;
 	}
 	
 	@PutMapping("/{id}")
-	public Student update(Integer id, Student student) {
+	public Student update(@PathVariable Integer id, Student student) {
 		Student studentUpdated = studentService.update(id, student);
 		return studentUpdated;
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(Integer id) {
+	public void delete(@PathVariable Integer id) {
 		studentService.delete(id);
 	}
 	
 	@PatchMapping("/{id}/inactivate")
-	public Student inactivate(Integer id) {
+	public Student inactivate(@PathVariable Integer id) {
 		Student student = studentService.inactivate(id);
 		return student;
 	}
