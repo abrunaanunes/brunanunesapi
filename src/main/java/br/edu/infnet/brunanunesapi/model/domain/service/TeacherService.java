@@ -7,8 +7,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Service;
 
-import br.edu.infnet.brunanunesapi.exceptions.InvalidStudentException;
-import br.edu.infnet.brunanunesapi.exceptions.StudentNotFoundException;
+import br.edu.infnet.brunanunesapi.exceptions.InvalidTeacherException;
+import br.edu.infnet.brunanunesapi.exceptions.TeacherNotFoundException;
 import br.edu.infnet.brunanunesapi.interfaces.CrudService;
 import br.edu.infnet.brunanunesapi.model.domain.Teacher;
 
@@ -57,7 +57,7 @@ public class TeacherService implements CrudService<Teacher, Integer> {
 		Teacher teacher = teacherMap.get(id);
 		
 		if (teacher == null) {
-			throw new StudentNotFoundException("Teacher not found");
+			throw new TeacherNotFoundException("Teacher not found");
 		}
 		
 		return teacher;
@@ -70,11 +70,11 @@ public class TeacherService implements CrudService<Teacher, Integer> {
 		}
 		
 		if (teacher.getFirstName() == null || teacher.getLastName() == null) {
-			throw new InvalidStudentException("Teacher name cannot be null");
+			throw new InvalidTeacherException("Teacher name cannot be null");
 		}
 		
 		if (teacher.getFirstName().trim().isEmpty()|| teacher.getLastName().trim().isEmpty()) {
-			throw new InvalidStudentException("Teacher name cannot be empty");
+			throw new InvalidTeacherException("Teacher name cannot be empty");
 		}
 		
 		if (action == "CREATE" && teacher.getId() != null && teacher.getId() > 0) {
