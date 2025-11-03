@@ -9,43 +9,42 @@ import org.springframework.stereotype.Service;
 
 import br.edu.infnet.brunanunesapi.exceptions.InvalidStudentException;
 import br.edu.infnet.brunanunesapi.exceptions.StudentNotFoundException;
-import br.edu.infnet.brunanunesapi.interfaces.CrudService;
 import br.edu.infnet.brunanunesapi.model.domain.Student;
+import br.edu.infnet.brunanunesapi.repository.StudentRepository;
 
 @Service
 public class StudentService implements CrudService<Student, Integer> {
 
-    private final Map<Integer, Student> studentMap = new ConcurrentHashMap<>();
-    private final AtomicInteger nextId = new AtomicInteger(1);
+    private final StudentRepository studentRepository;
+    
+    public StudentService(StudentRepository studentRepository)
+    {
+    	this.studentRepository = studentRepository;
+    }
     
 	@Override
 	public Student create(Student student) {
 		this.validateCreateOrUpdateStudent(student, "CREATE");
-        student.setId(nextId.getAndIncrement());
-        studentMap.put(student.getId(), student);
-		return student;
+        return studentRepository.save(student);
 	}
 
 	@Override
 	public List<Student> getAll() {
-		return new ArrayList<Student>(studentMap.values());
+		return studentRepository.findAll();
 	}
 
 	@Override
 	public Student update(Integer id, Student student) {
-		Student studentUpdated = this.getById(id);
-		this.validateCreateOrUpdateStudent(student, "CREATE");
+		this.validateCreateOrUpdateStudent(student, "UPDATE");
+		student.setId(id);
 		
-		studentUpdated.setFirstName(student.getFirstName());
-		studentUpdated.setLastName(student.getLastName());
-		
-		return studentUpdated;
+		return studentRepository.save(student);
 	}
 
 	@Override
 	public void delete(Integer id) {
 		Student student = this.getById(id);
-		studentMap.remove(student.getId());
+		studentRepository.delete(student);
 	}
 	
 	@Override
@@ -54,13 +53,7 @@ public class StudentService implements CrudService<Student, Integer> {
 			throw new IllegalArgumentException("Invalid student ID");
 		}
 		
-		Student student = studentMap.get(id);
-		
-		if (student == null) {
-			throw new StudentNotFoundException("Student not found");
-		}
-		
-		return student;
+		return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student not found"));
 	}
 	
 	public Student inactivate(Integer id)
@@ -74,7 +67,7 @@ public class StudentService implements CrudService<Student, Integer> {
 		
 		student.setActive(false);
 		
-		return student;
+		return studentRepository.save(student);
 	}
 	
 	private void validateCreateOrUpdateStudent(Student student, String action)

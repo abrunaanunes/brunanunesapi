@@ -1,5 +1,8 @@
 package br.edu.infnet.brunanunesapi.model.domain;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Teacher extends Person {
 
     private String email;

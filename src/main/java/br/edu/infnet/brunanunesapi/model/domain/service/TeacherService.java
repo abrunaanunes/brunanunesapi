@@ -9,43 +9,42 @@ import org.springframework.stereotype.Service;
 
 import br.edu.infnet.brunanunesapi.exceptions.InvalidTeacherException;
 import br.edu.infnet.brunanunesapi.exceptions.TeacherNotFoundException;
-import br.edu.infnet.brunanunesapi.interfaces.CrudService;
 import br.edu.infnet.brunanunesapi.model.domain.Teacher;
+import br.edu.infnet.brunanunesapi.repository.TeacherRepository;
 
 @Service
 public class TeacherService implements CrudService<Teacher, Integer> {
 
-    private final Map<Integer, Teacher> teacherMap = new ConcurrentHashMap<>();
-    private final AtomicInteger nextId = new AtomicInteger(1);
+    private final TeacherRepository teacherRepository;
+    
+    public TeacherService(TeacherRepository teacherRepository)
+    {
+    	this.teacherRepository = teacherRepository;
+    }
     
 	@Override
 	public Teacher create(Teacher teacher) {
 		this.validateCreateOrUpdateTeacher(teacher, "CREATE");
-		teacher.setId(nextId.getAndIncrement());
-		teacherMap.put(teacher.getId(), teacher);
-		return teacher;
+		return teacherRepository.save(teacher);
 	}
 
 	@Override
 	public List<Teacher> getAll() {
-		return new ArrayList<Teacher>(teacherMap.values());
+		return teacherRepository.findAll();
 	}
 
 	@Override
 	public Teacher update(Integer id, Teacher teacher) {
-		Teacher teacherUpdated = this.getById(id);
+		this.validateCreateOrUpdateTeacher(teacher, "UPDATE");
+		teacher.setId(id);
 		
-		teacherUpdated.setFirstName(teacher.getFirstName());
-		teacherUpdated.setLastName(teacher.getLastName());
-		
-		return teacherUpdated;
+		return teacherRepository.save(teacher);
 	}
 
 	@Override
 	public void delete(Integer id) {
 		Teacher teacher = this.getById(id);
-		teacherMap.remove(teacher.getId());
-		
+		teacherRepository.delete(teacher);
 	}
 
 	@Override
@@ -54,13 +53,7 @@ public class TeacherService implements CrudService<Teacher, Integer> {
 			throw new IllegalArgumentException("Invalid teacher ID");
 		}
 		
-		Teacher teacher = teacherMap.get(id);
-		
-		if (teacher == null) {
-			throw new TeacherNotFoundException("Teacher not found");
-		}
-		
-		return teacher;
+		return teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException("Teacher not found"));
 	}
 	
 	private void validateCreateOrUpdateTeacher(Teacher teacher, String action)

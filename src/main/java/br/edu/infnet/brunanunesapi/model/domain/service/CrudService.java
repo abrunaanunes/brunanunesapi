@@ -1,4 +1,4 @@
-package br.edu.infnet.brunanunesapi.interfaces;
+package br.edu.infnet.brunanunesapi.model.domain.service;
 
 import java.util.List;
 
