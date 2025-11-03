@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.brunanunesapi.model.domain.Student;
 import br.edu.infnet.brunanunesapi.model.domain.service.StudentService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/students")
@@ -28,7 +29,7 @@ public class StudentController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Student> create(@RequestBody Student student) throws Exception {
+	public ResponseEntity<Student> create(@Valid @RequestBody Student student) throws Exception {
 		Student studentAdded = studentService.create(student);
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentAdded);
 	}
@@ -44,7 +45,7 @@ public class StudentController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Student> update(@PathVariable Integer id, @RequestBody Student student) {
+	public ResponseEntity<Student> update(@PathVariable Integer id, @Valid @RequestBody Student student) {
 		return ResponseEntity.ok(studentService.update(id, student));
 	}
 	

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Address {
@@ -15,6 +16,7 @@ public class Address {
 	private Integer id;
 	
 	@JsonProperty("cep")
+	@NotNull(message = "CEP is required.")
 	private String zipCode;
 	
 	@JsonProperty("localidade")

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.brunanunesapi.model.domain.Teacher;
 import br.edu.infnet.brunanunesapi.model.domain.service.TeacherService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/teachers")
@@ -27,7 +28,7 @@ public class TeacherController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Teacher> create(@RequestBody Teacher teacher) {
+	public ResponseEntity<Teacher> create(@Valid @RequestBody Teacher teacher) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.create(teacher));
 	}
 	
@@ -43,7 +44,7 @@ public class TeacherController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Teacher> update(@PathVariable Integer id, @RequestBody Teacher teacher) {
+	public ResponseEntity<Teacher> update(@PathVariable Integer id, @Valid @RequestBody Teacher teacher) {
 		return ResponseEntity.ok(teacherService.update(id, teacher));
 	}
 	

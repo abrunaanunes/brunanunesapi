@@ -4,16 +4,23 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Student extends Person {
 	
+	@NotNull(message = "Username is required.")
 	private String username;
+	
+	@NotNull(message = "Password is required.")
 	private String passowrd;
+	
 	private boolean isActive;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
+	@Valid
 	private Address address;
 	
 	public String toString() {
