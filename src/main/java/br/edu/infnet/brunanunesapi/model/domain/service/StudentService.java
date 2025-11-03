@@ -35,8 +35,8 @@ public class StudentService implements CrudService<Student, Integer> {
 
 	@Override
 	public Student update(Integer id, Student student) {
-		this.validateCreateOrUpdateStudent(student, "UPDATE");
 		student.setId(id);
+		this.validateCreateOrUpdateStudent(student, "UPDATE");
 		
 		return studentRepository.save(student);
 	}

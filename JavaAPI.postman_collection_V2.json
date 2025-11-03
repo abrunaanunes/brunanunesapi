@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "78befa41-b392-4cfd-a1bc-d176ad06fe32",
+		"name": "JavaAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38359744"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/students",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Bruna\",\n    \"lastName\": \"Nunes\",\n    \"birthDate\": \"2002-04-24\",\n    \"username\": \"bruna.nunes\",\n    \"passowrd\": \"bruna123\",\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/students",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Bruna S\",\n    \"lastName\": \"Nunes\",\n    \"birthDate\": \"2002-04-24\",\n    \"username\": \"bruna.nunes\",\n    \"passowrd\": \"bruna123\",\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/students/11",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Bruna\",\n    \"lastName\": \"Nunes\",\n    \"birthDate\": \"2002-04-24\",\n    \"username\": \"bruna.nunes\",\n    \"passowrd\": \"bruna123\",\n    \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/students/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Bruna\",\n    \"lastName\": \"Nunes\",\n    \"birthDate\": \"2002-04-24\",\n    \"username\": \"bruna.nunes\",\n    \"passowrd\": \"bruna123\",\n    \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/students/2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inactivate",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/students/4/inactivate",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"4",
+								"inactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

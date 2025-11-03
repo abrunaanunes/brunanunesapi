@@ -26,8 +26,7 @@ public class TeacherController {
 	
 	@PostMapping
 	public Teacher create(@RequestBody Teacher teacher) {
-		Teacher teacherAdded = teacherService.create(teacher);
-		return teacherAdded;
+		return teacherService.create(teacher);
 	}
 	
 	@GetMapping
@@ -38,14 +37,12 @@ public class TeacherController {
 	
 	@GetMapping("/{id}")
 	public Teacher getById(@PathVariable Integer id) {
-		Teacher teacher = teacherService.getById(id);
-		return teacher;
+		return teacherService.getById(id);
 	}
 	
 	@PutMapping("/{id}")
-	public Teacher update(@PathVariable Integer id, Teacher teacher) {
-		Teacher teacherUpdated = teacherService.update(id, teacher);
-		return teacherUpdated;
+	public Teacher update(@PathVariable Integer id, @RequestBody Teacher teacher) {
+		return teacherService.update(id, teacher);
 	}
 	
 	@DeleteMapping("/{id}")
