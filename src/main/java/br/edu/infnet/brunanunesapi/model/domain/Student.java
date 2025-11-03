@@ -1,6 +1,9 @@
 package br.edu.infnet.brunanunesapi.model.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Student extends Person {
@@ -8,6 +11,10 @@ public class Student extends Person {
 	private String username;
 	private String passowrd;
 	private boolean isActive;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
+	private Address address;
 	
 	public String toString() {
 		return String.format(
@@ -38,5 +45,13 @@ public class Student extends Person {
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 }
