@@ -2,6 +2,8 @@ package br.edu.infnet.brunanunesapi.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,28 +27,29 @@ public class TeacherController {
 	}
 	
 	@PostMapping
-	public Teacher create(@RequestBody Teacher teacher) {
-		return teacherService.create(teacher);
+	public ResponseEntity<Teacher> create(@RequestBody Teacher teacher) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.create(teacher));
 	}
 	
 	@GetMapping
-	public List<Teacher> getAll() {
-		return teacherService.getAll();
+	public ResponseEntity<List<Teacher>> getAll() {
+		return ResponseEntity.ok(teacherService.getAll());
 	}
 	
 	
 	@GetMapping("/{id}")
-	public Teacher getById(@PathVariable Integer id) {
-		return teacherService.getById(id);
+	public ResponseEntity<Teacher> getById(@PathVariable Integer id) {
+		return ResponseEntity.ok(teacherService.getById(id));
 	}
 	
 	@PutMapping("/{id}")
-	public Teacher update(@PathVariable Integer id, @RequestBody Teacher teacher) {
-		return teacherService.update(id, teacher);
+	public ResponseEntity<Teacher> update(@PathVariable Integer id, @RequestBody Teacher teacher) {
+		return ResponseEntity.ok(teacherService.update(id, teacher));
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		teacherService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }

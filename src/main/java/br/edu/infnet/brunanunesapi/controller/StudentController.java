@@ -2,6 +2,8 @@ package br.edu.infnet.brunanunesapi.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,33 +28,34 @@ public class StudentController {
 	}
 	
 	@PostMapping
-	public Student create(@RequestBody Student student) throws Exception {
+	public ResponseEntity<Student> create(@RequestBody Student student) throws Exception {
 		Student studentAdded = studentService.create(student);
-		return studentAdded;
+		return ResponseEntity.status(HttpStatus.CREATED).body(studentAdded);
 	}
 	
 	@GetMapping
-	public List<Student> getAll() {
-		return studentService.getAll();
+	public ResponseEntity<List<Student>> getAll() {
+		return ResponseEntity.ok(studentService.getAll());
 	}
 	
 	@GetMapping("/{id}")
-	public Student getById(@PathVariable Integer id) {
-		return studentService.getById(id);
+	public ResponseEntity<Student> getById(@PathVariable Integer id) {
+		return ResponseEntity.ok(studentService.getById(id));
 	}
 	
 	@PutMapping("/{id}")
-	public Student update(@PathVariable Integer id, @RequestBody Student student) {
-		return studentService.update(id, student);
+	public ResponseEntity<Student> update(@PathVariable Integer id, @RequestBody Student student) {
+		return ResponseEntity.ok(studentService.update(id, student));
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		studentService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@PatchMapping("/{id}/inactivate")
-	public Student inactivate(@PathVariable Integer id) {
-		return studentService.inactivate(id);
+	public ResponseEntity<Student> inactivate(@PathVariable Integer id) {
+		return ResponseEntity.ok(studentService.inactivate(id));
 	}
 }
