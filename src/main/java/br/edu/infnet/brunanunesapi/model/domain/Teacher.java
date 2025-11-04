@@ -1,20 +1,39 @@
 package br.edu.infnet.brunanunesapi.model.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Teacher extends Person {
 
+	@Email(message = "Email must be valid.")
+    @NotBlank(message = "Email is required.")
+    @Size(max = 150, message = "Email can have at most 150 characters.")
     private String email;
+
+    @NotBlank(message = "Password is required.")
+    @Size(min = 3, max = 128, message = "Password must be between 3 and 128 characters.")
     private String passowrd;
+
+    @Size(max = 100, message = "Department can have at most 100 characters.")
     private String department;
+
+    @Size(max = 100, message = "Subject area can have at most 100 characters.")
     private String subjectArea;
-    
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Enrollment> enrollments = new ArrayList<>();
+
+    @Override
     public String toString() {
-		return String.format(
-	        "[%s | Email: %s | Password: %s | Department: %s | Subject Area: %s]",
-	        super.toString(), email, passowrd, department, subjectArea
-	    );
+        return "[%s | Email: %s | Department: %s | Subject Area: %s]"
+                .formatted(super.toString(), email, department, subjectArea);
     }
     
 	public String getEmail() {
