@@ -7,11 +7,13 @@ import java.util.Collection;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import br.edu.infnet.brunanunesapi.model.domain.Teacher;
 import br.edu.infnet.brunanunesapi.model.domain.service.TeacherService;
 
+@Order(1)
 @Component
 public class TeacherLoader implements ApplicationRunner {
 

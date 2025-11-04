@@ -6,12 +6,14 @@ import java.util.Collection;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import br.edu.infnet.brunanunesapi.clients.ViaCepFeignClient;
 import br.edu.infnet.brunanunesapi.model.domain.Student;
 import br.edu.infnet.brunanunesapi.model.domain.service.StudentService;
 
+@Order(2)
 @Component
 public class StudentLoader implements ApplicationRunner {
 
